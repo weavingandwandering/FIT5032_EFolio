@@ -233,7 +233,7 @@ h1 {
 }
 
 .binding{
-  color: blue;
+  color: rgb(1, 1, 100);
   font-size: 20px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
