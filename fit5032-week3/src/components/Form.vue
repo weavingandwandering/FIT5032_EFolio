@@ -2,7 +2,7 @@
     <div class="container mt-5">
         <div class="row"> 
             <div class="col-md-8 offset-md-2">
-                <h1>User Information Form / Credentials</h1><br>
+                <h1 class="example">User Information Form / Credentials</h1><br>
                 <form @submit.prevent="submitForm">
                     <div class="row mb-3">
                         <div class="col md-6">
@@ -35,7 +35,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary me-2" >Submit</button>
-                            <button  type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
+                            <button  type="button" id ="clear"  class="btn btn-secondary" @click="clearForm">Clear</button>
                             <!-- <h1> {{submittedCards.length}}</h1> -->
                         </div>                   
                         </div>
@@ -107,4 +107,21 @@
    .list-group-item {
    padding: 10px;
    }
+
+   button:hover{background-color:red;}
+   
+
+
+    @media only screen and (max-width: 767px) {
+    .example {background: green;}
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .example {background: blue;}
+    } 
+
+    @media only screen and (min-width: 1024px) {
+    .example {background: orange;}
+    } 
+
 </style>
