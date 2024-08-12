@@ -20,7 +20,7 @@
                             @blur="() => validatePassword(true)" 
                             @input="() => validatePassword(false)"
                             v-model="formData.password"><br>
-                            <div v-if="errors.username" class="text-danger"> {{errors.password}} </div>
+                            <div v-if="errors.password" class="text-danger"> {{errors.password}} </div>
                         </div>
                         <div class="row mb-3">
                         <div class="col-md-6">
@@ -31,21 +31,29 @@
                         </div>
                         <div class="col-md-6">
                             <label for="gender" class="form-label">Gender</label><br>
-                            <select class="form-select" id="gender"  v-model="formData.gender" >
+                            <select class="form-select" id="gender" 
+                            @blur="() => validateGender(true)" 
+                            @input="() => validateGender(false)"
+                            v-model="formData.gender" >
                                 <option value="female" >Female</option>
                                 <option value="male">Male</option>
                                 <option value="other">Other</option>
-                            </select> <br>
+                            </select> 
+                            <div v-if="errors.gender" class="text-danger"> {{errors.gender}} </div>
+
                             
                         </div>
                         <div class="col-md-6">
                             <label for="reason" class="form-label">Reason For Joining:</label><br>
-                            <textarea id="reason" class="form-control" name="reason" rows="3" v-model="formData.reason"></textarea><br>
+                            <textarea id="reason" class="form-control" name="reason" rows="3" 
+                            @blur="() => validateReason(true)" 
+                            @input="() => validateReason(false)"
+                            v-model="formData.reason"></textarea>
+                            <div v-if="errors.reason" class="text-danger"> {{errors.reason}} </div>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary me-2" >Submit</button>
                             <button  type="button" id ="clear"  class="btn btn-secondary" @click="clearForm">Clear</button>
-                            <!-- <h1> {{submittedCards.length}}</h1> -->
                         </div>                   
                         </div>
                     </div>
@@ -81,14 +89,14 @@
         password: '',
         isAustralian: false,
         reason: '',
-        gender: ''
+        gender: '',
     });
     
     const submittedCards = ref([]);
     
     const submitForm = () => {
         validateName(true);
-        if(!errors.value.username && !errors.value.password){
+        if(!errors.value.username && !errors.value.password &&!errors.value.gender && !errors.value.reason){
         submittedCards.value.push({ ...formData.value});  
         }
     };
@@ -137,6 +145,26 @@
             } else {
             errors.value.password = null;
             };
+    };
+
+    const validateGender = (blur) => {
+        if(formData.value.gender != "female" && formData.value.gender!= "male" && formData.value.gender != "other" ){
+            if (blur) errors.value.gender = "Please select a gender";
+        } else{
+            errors.value.gender = null;
+        }
+    };
+
+    const validateReason = (blur) => {
+        const minLength = 15;
+        const maxLength = 200;
+        if(formData.value.reason.length < minLength){
+            if (blur) errors.value.reason = 'Reason must be at least ${minLength} characters long.';
+        } else if (formData.value.reason.length > maxLength){
+            if (blur) errors.value.reason = 'Reason cannot be more than ${maxLength} characters long';
+        } else{
+            errors.value.reason = null;
+        };
     };
             
 </script>
