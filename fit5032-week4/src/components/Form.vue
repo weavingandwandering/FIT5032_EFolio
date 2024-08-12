@@ -9,17 +9,24 @@
                     <div class="row mb-3">
                         <div class="col md-6">
                             <label for="username" class="form-label">Username: </label></br>
-                            <input type="text" class="form-control" id="username" required v-model="formData.username" ><br>
+                            <input type="text" class="form-control" id="username" 
+                            @blur="() => validateName(true)" 
+                            @input="() => validateName(false)" v-model="formData.username">
+                            <div v-if="errors.username" class="text-danger"> {{errors.username}} </div>
                         </div>
                         <div class="col-md-6">
                             <label for="password">Password:</label><br>
-                            <input type="password" id="password" name="password" minlength="4" maxlength="10" v-model="formData.password"><br>
+                            <input type="password" id="password" name="password"  
+                            @blur="() => validatePassword(true)" 
+                            @input="() => validatePassword(false)"
+                            v-model="formData.password"><br>
+                            <div v-if="errors.username" class="text-danger"> {{errors.password}} </div>
                         </div>
                         <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-check">
                                 <label for="isAustralian" form="form-check-label">Australian Resident? </label><br>
-                                <input type="checkbox" id="isAustralian" name="isAustralian" checked v-model="formData.isAustralian" ><br>
+                                <input type="checkbox" id="isAustralian" name="isAustralian"  v-model="formData.isAustralian" ><br>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -27,13 +34,13 @@
                             <select class="form-select" id="gender"  v-model="formData.gender" >
                                 <option value="female" >Female</option>
                                 <option value="male">Male</option>
-                                <option value="other" selected="selected">Other</option>
+                                <option value="other">Other</option>
                             </select> <br>
                             
                         </div>
                         <div class="col-md-6">
                             <label for="reason" class="form-label">Reason For Joining:</label><br>
-                            <textarea id="reason" class="form-control" name="reason" rows="3" minlength="10" maxlength="200" v-model="formData.reason"></textarea><br>
+                            <textarea id="reason" class="form-control" name="reason" rows="3" v-model="formData.reason"></textarea><br>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary me-2" >Submit</button>
@@ -80,9 +87,10 @@
     const submittedCards = ref([]);
     
     const submitForm = () => {
-        submittedCards.value.push({
-            ...formData.value
-        });
+        validateName(true);
+        if(!errors.value.username && !errors.value.password){
+        submittedCards.value.push({ ...formData.value});  
+        }
     };
     
     const clearForm = () => {    
@@ -90,6 +98,47 @@
             submittedCards.value.pop();
        }
     };
+
+    const errors = ref({
+        username: null,
+        password: null,
+        resident: null,
+        gender: null,
+        reason: null,
+
+    });
+
+    const validateName = (blur) => {
+        if (formData.value.username.length < 4){
+            if (blur) errors.value.username = "Username must be atleast 4 characters";
+        } else{
+            errors.value.username = null;
+        }
+    };
+
+    const validatePassword = (blur) => {
+        const password = formData.value.password;
+        const minLength = 8;
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[A-Z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        
+        if (password.length < minLength) {
+            if (blur) errors.value.password = 'Password must be at least ${minLength} characters long.';
+            } else if (!hasUppercase) {
+            if (blur) errors.value.password = "Password must contain at least one uppercase letter.";
+            } else if (!hasLowercase) {
+            if (blur) errors.value.password = "Password must contain at least one lowercase letter.";
+            } else if (!hasNumber) {
+            if (blur) errors.value.password = "Password must contain at least one number.";
+            } else if (!hasSpecialChar) {
+            if (blur) errors.value.password = "Password must contain at least one special character.";
+            } else {
+            errors.value.password = null;
+            };
+    };
+            
 </script>
 
 <style scoped>
