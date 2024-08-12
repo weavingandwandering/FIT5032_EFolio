@@ -9,31 +9,31 @@
                     <div class="row mb-3">
                         <div class="col md-6">
                             <label for="username" class="form-label">Username: </label></br>
-                            <input type="text" class="form-control" id="username" v-model="formData.username" ><br>
+                            <input type="text" class="form-control" id="username" required v-model="formData.username" ><br>
                         </div>
                         <div class="col-md-6">
                             <label for="password">Password:</label><br>
-                            <input type="password" id="password" name="password" v-model="formData.password"><br>
+                            <input type="password" id="password" name="password" minlength="4" maxlength="10" v-model="formData.password"><br>
                         </div>
                         <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-check">
                                 <label for="isAustralian" form="form-check-label">Australian Resident? </label><br>
-                                <input type="checkbox" id="isAustralian" name="isAustralian" v-model="formData.isAustralian" ><br>
+                                <input type="checkbox" id="isAustralian" name="isAustralian" checked v-model="formData.isAustralian" ><br>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="gender" class="form-label">Gender</label><br>
-                            <select class="form-select" id="gender" v-model="formData.gender" >
-                                <option value="female">Female</option>
+                            <select class="form-select" id="gender"  v-model="formData.gender" >
+                                <option value="female" >Female</option>
                                 <option value="male">Male</option>
-                                <option value="other">Other</option>
+                                <option value="other" selected="selected">Other</option>
                             </select> <br>
                             
                         </div>
                         <div class="col-md-6">
                             <label for="reason" class="form-label">Reason For Joining:</label><br>
-                            <textarea id="reason" class="form-control" name="reason" rows="3" v-model="formData.reason"></textarea><br>
+                            <textarea id="reason" class="form-control" name="reason" rows="3" minlength="10" maxlength="200" v-model="formData.reason"></textarea><br>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary me-2" >Submit</button>
