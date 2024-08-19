@@ -15,21 +15,6 @@
                             <div v-if="errors.username" class="text-danger"> {{errors.username}} </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="password">Password:</label><br>
-                            <input type="password" id="password" name="password"  
-                            @blur="() => validatePassword(true)" 
-                            @input="() => validatePassword(false)"
-                            v-model="formData.password"><br>
-                            <div v-if="errors.password" class="text-danger"> {{errors.password}} </div>
-                        </div>
-                        <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <label for="isAustralian" form="form-check-label">Australian Resident? </label><br>
-                                <input type="checkbox" id="isAustralian" name="isAustralian"  v-model="formData.isAustralian" ><br>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
                             <label for="gender" class="form-label">Gender</label><br>
                             <select class="form-select" id="gender" 
                             @blur="() => validateGender(true)" 
@@ -43,13 +28,48 @@
 
                             
                         </div>
+                    
+                        <div class="col-md-6">
+                            
+                            <label for="password">Password:</label><br>
+                            <input type="password" id="password" name="password"  
+                            @blur="() => validatePassword(true)" 
+                            @input="() => validatePassword(true)"
+                            v-model="formData.password"><br>
+                            <div v-if="errors.password" class="text-danger"> {{errors.password}} </div>
+                            
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <label for="confirm-password" class="form-label">Confirm password</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="confirm-password"
+                                v-model="formData.confirmPassword"
+                                @blur="() => validateConfirmPassword(true)"
+                            />
+                            <div v-if="errors.confirmPassword" class="text-danger"> {{ errors.confirmPassword }} </div>
+                        </div>
+                        <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label for="isAustralian" form="form-check-label">Australian Resident? </label><br>
+                                <input type="checkbox" id="isAustralian" name="isAustralian"  v-model="formData.isAustralian" ><br>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <label for="reason" class="form-label">Reason For Joining:</label><br>
                             <textarea id="reason" class="form-control" name="reason" rows="3" 
-                            @blur="() => validateReason(true)" 
-                            @input="() => validateReason(false)"
+                                @blur="() => validateReason(true)" 
+                                @input="() => validateReason(false)"                            
                             v-model="formData.reason"></textarea>
-                            <div v-if="errors.reason" class="text-danger"> {{errors.reason}} </div>
+                            <div v-if="errors.reason" class="text-danger"> {{errors.reason}} </div> <br>
+                            <div v-if="validate.reason" class="text-safe"> {{validate.reason}} </div> <br>                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Suburb</label>
+                            <input type="text" class="form-control" id="suburb" v-bind:value="formData.suburb" />
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary me-2" >Submit</button>
@@ -100,6 +120,7 @@
     const formData = ref({
         username: '',
         password: '',
+        confirmPassword: '',
         isAustralian: false,
         reason: '',
         gender: '',
@@ -123,10 +144,15 @@
     const errors = ref({
         username: null,
         password: null,
+        confirmPassword: null,
         resident: null,
         gender: null,
         reason: null,
 
+    });
+    
+    const validate = ref({
+        reason:"hello",
     });
 
     const validateName = (blur) => {
@@ -160,6 +186,14 @@
             };
     };
 
+    const validateConfirmPassword = (blur) => {
+        if (formData.value.password !== formData.value.confirmPassword) {
+            if (blur) errors.value.confirmPassword = 'Passwords do not match.'
+        } else {
+            errors.value.confirmPassword = null
+        }
+}
+
     const validateGender = (blur) => {
         if(formData.value.gender != "female" && formData.value.gender!= "male" && formData.value.gender != "other" ){
             if (blur) errors.value.gender = "Please select a gender";
@@ -175,10 +209,18 @@
             if (blur) errors.value.reason = 'Reason must be at least 15 characters long.';
         } else if (formData.value.reason.length > maxLength){
             if (blur) errors.value.reason = 'Reason cannot be more than 200 characters long';
-        } else{
+        } else {
             errors.value.reason = null;
         };
+
+        if(formData.value.reason.includes("friend")){
+            validate.value.reason = "Great to have a friend.";
+        }
     };
+
+
+
+
             
 </script>
 
@@ -200,6 +242,9 @@
    padding: 10px;
    }
 
+   .text-safe{
+    color: green;
+   }
    button:hover{background-color:red;}
    
     @include media-breakpoint-up(md){
