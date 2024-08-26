@@ -1,6 +1,5 @@
 <script setup>
 // import JSON from './components/JSON.vue';
-import Form from './components/Form.vue'
 import Header from './components/Header.vue'
 </script>
 
@@ -31,7 +30,7 @@ header {
   margin: 0 auto 2rem;
 }
 
-.about{
+.about,.login{
   text-align: center;
 }
 
