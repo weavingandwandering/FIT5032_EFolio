@@ -15,21 +15,7 @@
                             <div v-if="errors.username" class="text-danger"> {{errors.username}} </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="password">Password:</label><br>
-                            <input type="password" id="password" name="password"  
-                            @blur="() => validatePassword(true)" 
-                            @input="() => validatePassword(false)"
-                            v-model="formData.password"><br>
-                            <div v-if="errors.password" class="text-danger"> {{errors.password}} </div>
-                        </div>
-                        <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <label for="isAustralian" form="form-check-label">Australian Resident? </label><br>
-                                <input type="checkbox" id="isAustralian" name="isAustralian"  v-model="formData.isAustralian" ><br>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                            
                             <label for="gender" class="form-label">Gender</label><br>
                             <select class="form-select" id="gender" 
                             @blur="() => validateGender(true)" 
@@ -41,7 +27,31 @@
                             </select> 
                             <div v-if="errors.gender" class="text-danger"> {{errors.gender}} </div>
 
-                            
+                        </div>
+                        <div class="row mb-3">
+                       
+                        <div class="col-md-6">
+                            <label for="password">Password:</label><br>
+                            <input type="password" id="password" name="password"  
+                            @blur="() => validatePassword(true)" 
+                            @input="() => validatePassword(false)"
+                            v-model="formData.password"><br>
+                            <div v-if="errors.password" class="text-danger"> {{errors.password}} </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="password">Confirm Password:</label><br>
+                            <input type="password" id="password" name="password"  
+                            @blur="() => confirmPassword(true)" 
+                            @input="() => confirmPassword(false)"
+                            v-model="formData.confirmPassword"><br>
+                            <div v-if="errors.confirmPassword" class="text-danger"> {{errors.confirmPassword}} </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label for="isAustralian" form="form-check-label">Australian Resident? </label><br>
+                                <input type="checkbox" id="isAustralian" name="isAustralian"  v-model="formData.isAustralian" ><br>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <label for="reason" class="form-label">Reason For Joining:</label><br>
@@ -50,7 +60,10 @@
                             @input="() => validateReason(false)"
                             v-model="formData.reason"></textarea>
                             <div v-if="errors.reason" class="text-danger"> {{errors.reason}} </div>
+                            <br>
+
                         </div>
+
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary me-2" >Submit</button>
                             <button  type="button" id ="clear"  class="btn btn-secondary" @click="clearForm">Clear</button>
@@ -100,6 +113,7 @@
     const formData = ref({
         username: '',
         password: '',
+        confirmPassword: '',
         isAustralian: false,
         reason: '',
         gender: '',
@@ -123,6 +137,7 @@
     const errors = ref({
         username: null,
         password: null,
+        confirmPassword: null,
         resident: null,
         gender: null,
         reason: null,
@@ -159,6 +174,15 @@
             errors.value.password = null;
             };
     };
+
+    const confirmPassword = (blur) => {
+        if(formData.value.password != formData.value.confirmPassword){
+            if (blur) errors.value.confirmPassword = "The password does not match";
+        else{
+            errors.value.confirmPassword = null;
+        }
+        }
+    }
 
     const validateGender = (blur) => {
         if(formData.value.gender != "female" && formData.value.gender!= "male" && formData.value.gender != "other" ){

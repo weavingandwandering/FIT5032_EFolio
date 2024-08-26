@@ -15,11 +15,13 @@ import Header from './components/Header.vue'
   </header>
 
   <main>
-    <Form />
+    <router-view></router-view>
+
+    <!-- <Form /> -->
   </main>
 </template>
 
-<style scoped>
+<style>
 header {
   line-height: 1.5;
 }
@@ -28,6 +30,11 @@ header {
   display: block;
   margin: 0 auto 2rem;
 }
+
+.about{
+  text-align: center;
+}
+
 
 /* @media (min-width: 1024px) {
   header {
