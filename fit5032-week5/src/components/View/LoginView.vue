@@ -20,7 +20,7 @@
             class="form-control"
             id="password"
             placeholder="Enter your password"
-          v-model="formData.password"/>
+          v-model="formData.role"/>
          
         </div>
   
@@ -28,7 +28,6 @@
         
 
       </form>
-        <h6> {{validData.password === formData.password}}{{ validData.username === formData.username }}{{ isAuthenticated.result }}</h6>
         <div v-if="!isAuthenticated.result" class="text-danger"> {{error.error}} </div>
     </div>
   </template>
@@ -48,10 +47,6 @@
         password: "student@5032"
     });
 
-    const routes = [
-    { path: '/', component: HomeView },
-    { path: '/about', component: AboutView },
-    ]
 
     const router = useRouter()
 
@@ -82,7 +77,6 @@
     };
 
     
-  // No script needed for now
   </script>
   
   <style scoped>

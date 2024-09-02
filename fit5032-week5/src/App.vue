@@ -5,11 +5,6 @@ import Header from './components/Header.vue'
 
 <template>
   <header>
-    <!-- <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" /> 
-
-     <div class="wrapper">
-      <JSON msg="You did it!" />
-    </div> -->
     <Header/>
   </header>
 
@@ -35,7 +30,7 @@ header {
 }
 
 
-/* @media (min-width: 1024px) {
+@media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
@@ -51,5 +46,5 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
-} */
+}
 </style>
