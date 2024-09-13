@@ -3,6 +3,7 @@ import HomeView from '../components/View/HomeView.vue'
 import AboutView from '../components/View/AboutView.vue'
 import LoginView from '../components/View/LoginView.vue'
 import FireBaseSignIn from '@/components/View/FireBaseSignIn.vue'
+import FireBaseRegister from '@/components/View/FireBaseRegister.vue'
 
 const routes = [
   {
@@ -23,8 +24,13 @@ const routes = [
   },
   {
     path: '/fireLogin',
-    name: FireLogin,
+    name: FireBaseSignIn,
     component: FireBaseSignIn
+  },
+  {
+    path: '/fireRegister',
+    name: FireBaseRegister,
+    component: FireBaseRegister
   }
 ]
 
