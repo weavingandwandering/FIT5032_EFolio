@@ -8,6 +8,7 @@ import LogoutView from '@/components/View/LogoutView.vue'
 import AddBookView from '@/components/View/AddBookView.vue'
 import BookList from '@/components/View/BookList.vue'
 import GetBookCountView from '@/components/View/GetBookCountView.vue'
+import WeatherView from '@/components/View/WeatherView.vue'
 
 const routes = [
   {
@@ -55,6 +56,11 @@ const routes = [
     path: '/getbookcount',
     name: GetBookCountView,
     component: GetBookCountView
+  }, 
+  {
+    path: '/weather',
+    name: WeatherView,
+    component: WeatherView
   }
 ]
 

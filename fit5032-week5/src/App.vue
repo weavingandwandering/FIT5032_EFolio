@@ -14,6 +14,16 @@ import Header from './components/Header.vue'
     <!-- <Form /> -->
   </main>
 </template>
+<script>
+export default {
+  methods: {
+    showHeader() {
+      const noHeaderPaths = ['/getbookcount'];
+      return !noHeaderPaths.includes(this.$route.path);
+    }
+  }
+};
+</script>
 
 <style>
 header {

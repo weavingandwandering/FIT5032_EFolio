@@ -34,3 +34,22 @@ exports.countBooks = onRequest((req, res) => {
   });
 });
 
+
+const functions = require("firebase-functions");
+
+// Cloud Function to capitalize book data
+exports.capitalizeBookData = functions.firestore
+    .document("books/{bookId}")
+    .onWrite(async (change, context) => {
+      const newValue = change.after.data();
+
+      if (!newValue) return null;
+
+      const capitalizedIsbn = String(newValue.isbn).toUpperCase();
+      const capitalizedName = newValue.name.toUpperCase();
+
+      return change.after.ref.update({
+        isbn: capitalizedIsbn,
+        name: capitalizedName,
+      });
+    });
