@@ -31,7 +31,7 @@
   <script>
     import axios from "axios";
   
-    const apikey = "78a49ef66ad64a3b796050030981adfb"
+    const apikey = import.meta.env.VITE_WEATHER_KEY;
     console.log(apikey);
     export default {
       name: "App",
